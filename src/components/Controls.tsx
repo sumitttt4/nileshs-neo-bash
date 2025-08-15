@@ -23,8 +23,8 @@ export const Controls = () => {
   };
 
   return (
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50">
-      <div className="flex gap-2 p-2 rounded-xl bg-card/80 backdrop-blur-sm border border-border/50">
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 px-4">
+      <div className="flex flex-wrap gap-2 p-2 rounded-xl bg-card/80 backdrop-blur-sm border border-border/50 max-w-screen-sm">
         <Button
           variant="outline"
           size="sm"

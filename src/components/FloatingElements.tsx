@@ -5,9 +5,10 @@ import * as THREE from 'three';
 
 interface FloatingElementsProps {
   celebrationActive: boolean;
+  spawnGifts?: boolean;
 }
 
-export const FloatingElements = ({ celebrationActive }: FloatingElementsProps) => {
+export const FloatingElements = ({ celebrationActive, spawnGifts = false }: FloatingElementsProps) => {
   const balloonRefs = useRef<THREE.Mesh[]>([]);
   const confettiRefs = useRef<THREE.Mesh[]>([]);
 
@@ -78,7 +79,7 @@ export const FloatingElements = ({ celebrationActive }: FloatingElementsProps) =
       ))}
 
       {/* Gift Boxes */}
-      {Array.from({ length: 4 }, (_, i) => (
+      {Array.from({ length: spawnGifts ? 8 : 4 }, (_, i) => (
         <Float
           key={`gift-${i}`}
           speed={0.5 + i * 0.1}

@@ -1,5 +1,5 @@
 import { OrbitControls, Stars, Float, Sparkles } from '@react-three/drei';
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { BirthdayText } from './BirthdayText';
@@ -9,7 +9,11 @@ import { CityBackground } from './CityBackground';
 
 export const Scene3D = () => {
   const [celebrationActive, setCelebrationActive] = useState(false);
+  const [fireworksActive, setFireworksActive] = useState(false);
+  const [spawnGifts, setSpawnGifts] = useState(false);
+  const [sparklesActive, setSparklesActive] = useState(false);
   const groupRef = useRef<THREE.Group>(null);
+  const controlsRef = useRef<any>(null);
 
   useFrame((state) => {
     if (groupRef.current) {
@@ -23,10 +27,48 @@ export const Scene3D = () => {
     setTimeout(() => setCelebrationActive(false), 3000);
   };
 
+  // Event listeners for control buttons
+  useEffect(() => {
+    const handleResetCamera = () => {
+      if (controlsRef.current) {
+        controlsRef.current.reset();
+      }
+    };
+
+    const handleTriggerCelebration = () => {
+      setFireworksActive(true);
+      triggerCelebration();
+      setTimeout(() => setFireworksActive(false), 4000);
+    };
+
+    const handleSpawnGifts = () => {
+      setSpawnGifts(true);
+      setTimeout(() => setSpawnGifts(false), 1000);
+    };
+
+    const handleAddSparkles = () => {
+      setSparklesActive(true);
+      setTimeout(() => setSparklesActive(false), 5000);
+    };
+
+    window.addEventListener('resetCamera', handleResetCamera);
+    window.addEventListener('triggerCelebration', handleTriggerCelebration);
+    window.addEventListener('spawnGifts', handleSpawnGifts);
+    window.addEventListener('addSparkles', handleAddSparkles);
+
+    return () => {
+      window.removeEventListener('resetCamera', handleResetCamera);
+      window.removeEventListener('triggerCelebration', handleTriggerCelebration);
+      window.removeEventListener('spawnGifts', handleSpawnGifts);
+      window.removeEventListener('addSparkles', handleAddSparkles);
+    };
+  }, []);
+
   return (
     <>
       {/* Camera Controls */}
       <OrbitControls
+        ref={controlsRef}
         enablePan={false}
         enableZoom={true}
         enableRotate={true}
@@ -64,20 +106,42 @@ export const Scene3D = () => {
         <BirthdayText onClick={triggerCelebration} />
 
         {/* Floating Elements */}
-        <FloatingElements celebrationActive={celebrationActive} />
+        <FloatingElements 
+          celebrationActive={celebrationActive} 
+          spawnGifts={spawnGifts}
+        />
 
         {/* Sparkles around the scene */}
         <Sparkles
-          count={50}
+          count={sparklesActive ? 100 : 50}
           scale={[15, 15, 15]}
-          size={2}
-          speed={0.6}
+          size={sparklesActive ? 4 : 2}
+          speed={sparklesActive ? 1.2 : 0.6}
           color="#FFD700"
         />
+
+        {/* Additional celebration sparkles */}
+        {sparklesActive && (
+          <Sparkles
+            count={75}
+            scale={[20, 20, 20]}
+            size={3}
+            speed={0.8}
+            color="#FF1493"
+          />
+        )}
       </group>
 
       {/* Particle Systems */}
-      <ParticleSystem active={celebrationActive} />
+      <ParticleSystem active={celebrationActive || fireworksActive} />
+      
+      {/* Additional firework effects */}
+      {fireworksActive && (
+        <>
+          <ParticleSystem active={true} />
+          <ParticleSystem active={true} />
+        </>
+      )}
     </>
   );
 };

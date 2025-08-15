@@ -4,6 +4,7 @@ import { LoadingScreen } from './LoadingScreen';
 import { Scene3D } from './Scene3D';
 import { AudioManager } from './AudioManager';
 import { Controls } from './Controls';
+import { VoiceManager } from './VoiceManager';
 
 export const BirthdayScene = () => {
   return (
@@ -23,6 +24,7 @@ export const BirthdayScene = () => {
         >
           <Scene3D />
         </Canvas>
+        <VoiceManager />
         <AudioManager />
         <Controls />
       </Suspense>
