@@ -11,8 +11,15 @@ export const BirthdayScene = () => {
       <Suspense fallback={<LoadingScreen />}>
         <Canvas
           camera={{ position: [0, 0, 8], fov: 45 }}
-          gl={{ antialias: true, alpha: true }}
+          gl={{ 
+            antialias: true, 
+            alpha: true,
+            powerPreference: "high-performance",
+            preserveDrawingBuffer: false
+          }}
           className="w-full h-full"
+          dpr={[1, 2]}
+          performance={{ min: 0.1 }}
         >
           <Scene3D />
         </Canvas>

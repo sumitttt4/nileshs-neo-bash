@@ -1,8 +1,7 @@
-import { OrbitControls, Stars, Text3D, Float, Sparkles } from '@react-three/drei';
+import { OrbitControls, Stars, Float, Sparkles } from '@react-three/drei';
 import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
-import { EffectComposer, Bloom, ChromaticAberration } from '@react-three/postprocessing';
 import { BirthdayText } from './BirthdayText';
 import { FloatingElements } from './FloatingElements';
 import { ParticleSystem } from './ParticleSystem';
@@ -40,7 +39,7 @@ export const Scene3D = () => {
       />
 
       {/* Lighting */}
-      <ambientLight intensity={0.2} />
+      <ambientLight intensity={0.4} />
       <pointLight position={[10, 10, 10]} intensity={1} color="#00BFFF" />
       <pointLight position={[-10, -10, 10]} intensity={0.8} color="#FF1493" />
       <pointLight position={[0, 0, -10]} intensity={0.6} color="#FFFF00" />
@@ -50,7 +49,7 @@ export const Scene3D = () => {
       <Stars
         radius={300}
         depth={50}
-        count={2000}
+        count={1000}
         factor={4}
         saturation={0.8}
         fade={true}
@@ -69,9 +68,9 @@ export const Scene3D = () => {
 
         {/* Sparkles around the scene */}
         <Sparkles
-          count={100}
-          scale={[20, 20, 20]}
-          size={3}
+          count={50}
+          scale={[15, 15, 15]}
+          size={2}
           speed={0.6}
           color="#FFD700"
         />
@@ -79,19 +78,6 @@ export const Scene3D = () => {
 
       {/* Particle Systems */}
       <ParticleSystem active={celebrationActive} />
-
-      {/* Post-processing Effects */}
-      <EffectComposer>
-        <Bloom
-          intensity={1.5}
-          luminanceThreshold={0.1}
-          luminanceSmoothing={0.9}
-          height={300}
-        />
-        <ChromaticAberration
-          offset={[0.0005, 0.0012]}
-        />
-      </EffectComposer>
     </>
   );
 };
