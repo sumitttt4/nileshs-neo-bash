@@ -13,7 +13,7 @@ export const AudioManager = () => {
     // You would replace this with actual audio file
     // audio.src = '/audio/birthday-music.mp3';
     audio.loop = true;
-    audio.volume = 0.3;
+    audio.volume = 0.7;
     audioRef.current = audio;
 
     return () => {
