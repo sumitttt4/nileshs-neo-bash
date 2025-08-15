@@ -15,7 +15,7 @@ export const VoiceManager = () => {
 
       // Create speech synthesis using Web Speech API as fallback
       if ('speechSynthesis' in window) {
-        const utterance = new SpeechSynthesisUtterance('Happy Birthday Nilesh Motkaaaaaaaaaaaaaa!');
+        const utterance = new SpeechSynthesisUtterance('Happy Birthday Nilesh Motka!');
         utterance.voice = speechSynthesis.getVoices().find(voice => 
           voice.name.includes('Female') || voice.name.includes('Google')
         ) || speechSynthesis.getVoices()[0];
